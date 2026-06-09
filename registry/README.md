@@ -33,3 +33,31 @@ services.AddSha256PersonalAccessTokenAuthentication();
 ```
 
 Swapper de stratégie de hash/validation = un autre adapter `auth-pat-*` derrière le même contrat.
+
+## Build & publication
+
+Outil unique : [`tools/registry/publish.sh`](../tools/registry/publish.sh).
+
+```bash
+# Plan AMORÇAGE (git-raw) : valide les manifestes + génère dist/registry/
+#   (registry.json agrégé + fichiers), servable tel quel par le CLI.
+./tools/registry/publish.sh build
+
+# Plan DISTRIBUTION : build, puis pousse chaque item vers l'API Cloud
+#   (login -> résolution org par slug -> POST /organizations/{id}/registry/items),
+#   contrats avant adapters pour que les dépendances résolvent.
+OUTLET_CLOUD_URL=https://cloud.outlet.dev \
+OUTLET_CLOUD_EMAIL=ci@acme.test OUTLET_CLOUD_PASSWORD=*** OUTLET_ORG_SLUG=acme \
+  ./tools/registry/publish.sh publish
+
+./tools/registry/publish.sh publish --dry-run   # liste ce qui serait poussé, sans réseau
+```
+
+- `dist/registry/` est **committé** : c'est la source statique git-raw qui amorce les
+  consommateurs (dont Cloud) *avant* qu'un serveur Cloud n'existe. La CI échoue si
+  `dist/` est obsolète → relancer `build` et committer.
+- La publication CI tourne via [`.github/workflows/publish-registry.yml`](../.github/workflows/publish-registry.yml)
+  sur push de la branche par défaut. Secrets requis : `OUTLET_CLOUD_URL`,
+  `OUTLET_CLOUD_EMAIL`, `OUTLET_CLOUD_PASSWORD`, `OUTLET_ORG_SLUG`.
+- Le compte de service doit être **Owner/Admin** de l'org et au plan **Pro**
+  (le management Cloud est une offre payante ; le registre public reste gratuit).
