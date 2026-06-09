@@ -1,0 +1,39 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup Label="Production Dependencies">
+    <!-- DI + logging + options (Mediator, pipeline behaviors, composition) -->
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.8" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.8" />
+  </ItemGroup>
+
+  <ItemGroup Label="Infrastructure — Persistence (Identity bounded context)">
+    <!-- EF Core: provider-agnostic core + PostgreSQL (prod). Tests use the SQLite provider below. -->
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.8" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.2" />
+    <!-- Membership (password/2FA/lockout) for the Identity context's User aggregate. -->
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.8" />
+    <!-- Design-time only: `dotnet ef migrations` (PrivateAssets=all in the csproj). -->
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.8" />
+  </ItemGroup>
+
+  <ItemGroup Label="Test Dependencies">
+    <!-- Test Framework -->
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+
+    <!-- Test Utilities -->
+    <PackageVersion Include="FluentAssertions" Version="8.10.0" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+
+    <!-- Architecture Tests -->
+    <PackageVersion Include="NetArchTest.Rules" Version="1.3.2" />
+
+    <!-- Hermetic relational persistence tests (in-memory SQLite) -->
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.8" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Kernel.Shared/Outlet.Kernel.Shared/Outlet.Kernel.Shared.csproj" />
+    <Project Path="src/Kernel.Shared/Outlet.Kernel.Shared.UnitTests/Outlet.Kernel.Shared.UnitTests.csproj" />
+    <Project Path="src/Outlet.Identity.Domain/Outlet.Identity.Domain.csproj" />
+    <Project Path="src/Outlet.Identity.Application/Outlet.Identity.Application.csproj" />
+    <Project Path="src/Outlet.Identity.Infrastructure/Outlet.Identity.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Outlet.Identity.Domain.UnitTests/Outlet.Identity.Domain.UnitTests.csproj" />
+    <Project Path="tests/Outlet.Identity.Application.UnitTests/Outlet.Identity.Application.UnitTests.csproj" />
+    <Project Path="tests/Outlet.Identity.Infrastructure.UnitTests/Outlet.Identity.Infrastructure.UnitTests.csproj" />
+    <Project Path="tests/Outlet.ArchitectureTests/Outlet.ArchitectureTests.csproj" />
+  </Folder>
+</Solution>
